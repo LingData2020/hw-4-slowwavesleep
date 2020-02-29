@@ -229,14 +229,13 @@ Convert relevant variables to factors and save fitered data as `mono1`.
 ```{r}
 
 left_boundary <- 600
-right_boundary <- mean(mono$RT) + (sd(mono$RT) * 3)
 
 left_boundary_log <- mean(mono$RTlog) - (sd(mono$RTlog) * 3)
 right_boundary_log <- mean(mono$RTlog) + (sd(mono$RTlog) * 3)
 
 mono1 <- 
   mono %>% 
-  filter(RT > left_boundary & RT < right_boundary) %>%
+  filter(RT > left_boundary) %>%
   filter(RTlog > left_boundary_log & RTlog < right_boundary_log) %>%
   filter(TypeOfStimuli != 'FillerUnacceptable' & TypeOfStimuli != 'FillerAcceptable') %>%
   select(ParticipantID, TypeOfStimuli, WordOrder, AcceptabilityJ =
@@ -401,11 +400,6 @@ How can you interpret difference with the result of 2.3?
 Answer:
 A paired t-test simply calculates the difference between paired observations and then performs a 1-sample t-test on the differences. In other words, paired t-test and two-sample t-test are calculated differently. With paired t-test there's even less reason to reject the null hypothesis. The main difference is two-sample t-test is used for independent samples, while paired t-test is used when the sample are dependent in some way. In our current scenario the samples are evidently dependent, because the same participants are given different stimuli which they react to.
 
-
-```{r}
-sd(mean_rtlog$Congruent) / sqrt(140) + sd(mean_rtlog$Incongruent) / sqrt(140)
-sd(mean_rtlog$diff) / sqrt(140)
-```
 
 
 #### 2.5. Paired t-test out of the box
